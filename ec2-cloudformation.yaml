@@ -1,0 +1,16 @@
+Resources:
+  EC2Instance:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-02396cdd13e9a1257 # Use a suitable Amazon Machine Image (AMI) for your region and requirements
+      KeyName: web-keypair # Replace with your own key pair name
+      SecurityGroupIds:
+        - sg-01a508bc795920855 # Replace with your own security group ID
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum update -y
+          yum install -y httpd
+          systemctl start httpd.service
+          systemctl enable httpd.service
